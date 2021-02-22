@@ -1,4 +1,5 @@
 import pytest
+import requests
 
 
 # Проверяем возможность очистки всего словаря
