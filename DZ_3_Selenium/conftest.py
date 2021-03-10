@@ -15,17 +15,18 @@ def browser(request):
     if browser == "chrome":
         options = webdriver.ChromeOptions()
         options.headless = True
-        driver = webdriver.Chrome(executable_path=r'C:\\Users\\irina\\Documents\\webdriver\\chromedriver.exe')
+        driver = webdriver.Chrome(options = options)
         driver.maximize_window()
+
     elif browser == "firefox":
         options = webdriver.FirefoxOptions()
         options.headless = True
-        driver = webdriver.Firefox(executable_path=r'C:\\Users\\irina\\Documents\\webdriver\\geckodriver.exe')
+        driver = webdriver.Firefox(options = options)
         driver.maximize_window()
     elif browser == "ie":
         options = webdriver.IeOptions()
         options.headless = True
-        driver = webdriver.Ie(executable_path=r'C:\\Users\\irina\\Documents\\webdriver\\msedgedriver.exe')
+        driver = webdriver.Ie(options = options)
         driver.maximize_window()
 
     yield driver
@@ -36,4 +37,3 @@ def browser(request):
 def open_opencart_homepage(request):
     baseurl = request.config.getoption("--baseurl")
     return baseurl
-

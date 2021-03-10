@@ -1,6 +1,3 @@
-import time
-
-
 def test_homepage(browser, open_opencart_homepage):
     # Ищем элементы на главной странице
     browser.get(open_opencart_homepage)
@@ -33,7 +30,6 @@ def test_login_admin_page(browser, open_opencart_homepage):
     browser.find_element_by_css_selector("button[type='submit']")
     browser.find_element_by_link_text("Forgotten Password")
     browser.find_element_by_xpath("//*[text()='OpenCart']")
-    time.sleep(2)
 
 
 def test_product_cart(browser, open_opencart_homepage):
@@ -44,7 +40,6 @@ def test_product_cart(browser, open_opencart_homepage):
     browser.find_element_by_name("quantity")
     browser.find_element_by_link_text("Samsung Galaxy Tab 10.1")
     browser.find_element_by_id("logo")
-    time.sleep(2)
 
 
 def test_login_page(browser, open_opencart_homepage):
@@ -55,6 +50,3 @@ def test_login_page(browser, open_opencart_homepage):
     browser.find_element_by_name("password")
     browser.find_element_by_css_selector("input[type='submit']")
     browser.find_element_by_link_text("Continue")
-    time.sleep(2)
-
-
