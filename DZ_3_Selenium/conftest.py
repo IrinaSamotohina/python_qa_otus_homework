@@ -1,5 +1,6 @@
 from selenium import webdriver
 import pytest
+from DZ_3_Selenium.base_pages import AdminPage
 
 
 def pytest_addoption(parser):
@@ -15,18 +16,17 @@ def browser(request):
     if browser == "chrome":
         options = webdriver.ChromeOptions()
         options.headless = True
-        driver = webdriver.Chrome(options = options)
+        driver = webdriver.Chrome(options=options)
         driver.maximize_window()
-
     elif browser == "firefox":
         options = webdriver.FirefoxOptions()
         options.headless = True
-        driver = webdriver.Firefox(options = options)
+        driver = webdriver.Firefox(executable_path=r'C:\\Users\\irina\\Documents\\webdriver\\geckodriver.exe')
         driver.maximize_window()
     elif browser == "ie":
         options = webdriver.IeOptions()
         options.headless = True
-        driver = webdriver.Ie(options = options)
+        driver = webdriver.Ie(options=options)
         driver.maximize_window()
 
     yield driver
@@ -37,3 +37,9 @@ def browser(request):
 def open_opencart_homepage(request):
     baseurl = request.config.getoption("--baseurl")
     return baseurl
+
+
+@pytest.fixture()
+def admin_login_page(request, browser):
+    browser.get(request.config.getoption("--baseurl") + "/admin/")
+    return AdminPage
