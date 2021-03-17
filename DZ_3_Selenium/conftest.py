@@ -1,11 +1,12 @@
 from selenium import webdriver
 import pytest
-from DZ_3_Selenium.base_pages import AdminPage
+import requests
+from DZ_3_Selenium.methods.admin_method import AdminPage
 
 
 def pytest_addoption(parser):
     parser.addoption("--browser", choices=["chrome", "firefox", "ie"], help="Choose browser")
-    parser.addoption("--baseurl", default="https://demo.opencart.com/")
+    parser.addoption("--baseurl", default="https://demo.opencart.com")
 
 
 @pytest.fixture()
@@ -16,17 +17,19 @@ def browser(request):
     if browser == "chrome":
         options = webdriver.ChromeOptions()
         options.headless = True
-        driver = webdriver.Chrome(options=options)
+        driver = webdriver.Chrome(options = options)
         driver.maximize_window()
+
     elif browser == "firefox":
         options = webdriver.FirefoxOptions()
         options.headless = True
-        driver = webdriver.Firefox(executable_path=r'C:\\Users\\irina\\Documents\\webdriver\\geckodriver.exe')
+        #driver = webdriver.Firefox(executable_path=r'C:\\Users\\i.samotokhina\\Documents\\webdriver\\geckodriver.exe')
+        driver = webdriver.Firefox(executable_path=r'C:\\Users\\i.samotokhina\\Downloads\\geckodriver-v0.29.0-win64\\geckodriver.exe')
         driver.maximize_window()
     elif browser == "ie":
         options = webdriver.IeOptions()
         options.headless = True
-        driver = webdriver.Ie(options=options)
+        driver = webdriver.Ie(options = options)
         driver.maximize_window()
 
     yield driver
@@ -34,12 +37,6 @@ def browser(request):
 
 
 @pytest.fixture()
-def open_opencart_homepage(request):
-    baseurl = request.config.getoption("--baseurl")
-    return baseurl
-
-
-@pytest.fixture()
 def admin_login_page(request, browser):
     browser.get(request.config.getoption("--baseurl") + "/admin/")
-    return AdminPage
+    return AdminPage(browser)

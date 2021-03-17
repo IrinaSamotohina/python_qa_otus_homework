@@ -1,6 +1,3 @@
-from DZ_3_Selenium.base_pages import AdminPage
-
-
 def test_login_admin(browser, admin_login_page):
     textfield = admin_login_page.find_text_field()
     button = admin_login_page.find_sumbit_button()
@@ -9,10 +6,13 @@ def test_login_admin(browser, admin_login_page):
     button.click()
     assert browser.current_url != 500
 
-# def test_admin_forgotten_password(browser, admin_login_page):
-#     browser.get(open_opencart_homepage + "/admin/")
-#     browser.find_element_by_link_text("Forgotten Password").click()
-#     browser.find_element_by_id("input-email").send_keys("test@test.ru")
-#     browser.find_element_by_css_selector("button[type='submit']").click()
-#     q = browser.find_element_by_class_name("alert-dismissible")
-#     assert q is not None
+
+def test_admin_forgotten_password(admin_login_page):
+    link = admin_login_page.find_pass_text()
+    link.click()
+    button = admin_login_page.find_sumbit_button()
+    textfield_email = admin_login_page.find_input_email()
+    textfield_email.send_keys("test@test.ru")
+    button.click()
+    q = admin_login_page.find_alert()
+    assert q is not None
