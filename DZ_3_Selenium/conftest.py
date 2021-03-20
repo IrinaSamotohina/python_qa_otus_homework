@@ -24,7 +24,7 @@ def browser(request):
     elif browser == "firefox":
         options = webdriver.FirefoxOptions()
         options.headless = True
-        driver = webdriver.Firefox(executable_path=r'C:\\Users\\irina\\Documents\\webdriver\\geckodriver.exe')
+        driver = webdriver.Firefox(options = options)
         driver.maximize_window()
     elif browser == "ie":
         options = webdriver.IeOptions()
