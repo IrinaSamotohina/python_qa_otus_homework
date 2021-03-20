@@ -1,18 +1,11 @@
 def test_login_admin(browser, admin_login_page):
-    textfield = admin_login_page.find_text_field()
-    button = admin_login_page.find_sumbit_button()
-    textfield.clear()
-    textfield.send_keys("demo")
-    button.click()
-    assert browser.current_url != 500
+    admin_login_page.text_field()
+    admin_login_page.find_and_click_submit_button()
+    assert browser.current_url != None
 
 
 def test_admin_forgotten_password(admin_login_page):
-    link = admin_login_page.find_pass_text()
-    link.click()
-    button = admin_login_page.find_sumbit_button()
-    textfield_email = admin_login_page.find_input_email()
-    textfield_email.send_keys("test@test.ru")
-    button.click()
-    q = admin_login_page.find_alert()
-    assert q is not None
+    admin_login_page.find_and_click_pass_text()
+    admin_login_page.find_input_email()
+    admin_login_page.find_and_click_submit_button()
+    assert admin_login_page.find_alert() is not None

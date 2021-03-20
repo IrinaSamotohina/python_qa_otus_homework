@@ -1,4 +1,4 @@
-from DZ_3_Selenium.locators.locators import BasePageLocators
+from DZ_3_Selenium.locators.locators import AdminPageLocators
 
 
 class AdminPage:
@@ -6,22 +6,25 @@ class AdminPage:
     def __init__(self, browser):
         self.browser = browser
 
-    def find_text_field(self):
-        text_field = self.browser.find_element(*BasePageLocators.TEXT_FIELDS)
+    def text_field(self):
+        find_field = self.browser.find_element(*AdminPageLocators.TEXT_FIELDS)
+        find_field.clear()
+        text_field = find_field.send_keys("demo")
         return text_field
 
-    def find_sumbit_button(self):
-        submit_button = self.browser.find_element(*BasePageLocators.SUBMIT_BUTTON)
+    def find_and_click_submit_button(self):
+        submit_button = self.browser.find_element(*AdminPageLocators.SUBMIT_BUTTON).click()
         return submit_button
 
-    def find_pass_text(self):
-        pass_text = self.browser.find_element(*BasePageLocators.FORGOTTEN_PASS)
+    def find_and_click_pass_text(self):
+        pass_text = self.browser.find_element(*AdminPageLocators.FORGOTTEN_PASS).click()
         return pass_text
 
     def find_input_email(self):
-        input_email = self.browser.find_element(*BasePageLocators.INPUT_EMAIL)
-        return input_email
+        input_email = self.browser.find_element(*AdminPageLocators.INPUT_EMAIL)
+        key = input_email.send_keys("test@test.ru")
+        return key
 
     def find_alert(self):
-        alert = self.browser.find_element(*BasePageLocators.ALERT)
+        alert = self.browser.find_element(*AdminPageLocators.ALERT)
         return alert
