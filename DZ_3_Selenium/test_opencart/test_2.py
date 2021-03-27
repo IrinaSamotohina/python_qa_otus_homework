@@ -1,52 +1,57 @@
+from DZ_3_Selenium.locators.locators import BasePageLocators
+from DZ_3_Selenium.locators.locators import CatalogPageLocators
+from DZ_3_Selenium.locators.locators import AdminPageLocators
+from DZ_3_Selenium.locators.locators import ProductPageLocators
+from DZ_3_Selenium.locators.locators import LoginPageLocators
+
+
 def test_homepage(browser, open_opencart_homepage):
     # Ищем элементы на главной странице
-    browser.get(open_opencart_homepage)
-    browser.find_element_by_id("logo")
-    browser.find_element_by_id("slideshow0")
-    browser.find_element_by_css_selector("button[type='button']")
-    browser.find_element_by_link_text("MacBook")
-    browser.find_element_by_xpath("//form[@id='form-currency']")
-    product_count = len(browser.find_elements_by_class_name("product-thumb"))
+    product_count = open_opencart_homepage.find_product_card()
     assert product_count == 4
+    assert browser.find_element(*BasePageLocators.LOGO)
+    assert browser.find_element(*BasePageLocators.SLIDER)
+    assert browser.find_element(*BasePageLocators.BUTTON)
+    assert browser.find_element(*BasePageLocators.TEXT_MAC)
+    assert browser.find_element(*BasePageLocators.CURRENCY)
+    assert browser.find_element(*BasePageLocators.PRODUCT)
 
 
-def test_catalog(browser, open_opencart_homepage):
+def test_catalog(browser, open_catalog_page):
     # Ищем элементы на странице каталога
-    browser.get(open_opencart_homepage + "/index.php?route=product/category&path=20")
-    browser.find_element_by_class_name("dropdown-toggle")
-    browser.find_element_by_class_name("breadcrumb")
-    browser.find_element_by_css_selector("button[type='button']")
-    browser.find_element_by_link_text("HP LP3065")
-    browser.find_element_by_xpath("//form[@id='form-currency']")
-    product_catalog = len(browser.find_elements_by_class_name("caption"))
-    assert product_catalog == 12
+    product_count = open_catalog_page.find_catalog_card()
+    assert product_count == 12
+    assert browser.find_element(*CatalogPageLocators.DROPDOWN_TOGGLE)
+    assert browser.find_element(*CatalogPageLocators.HOME_BUTTON)
+    assert browser.find_element(*CatalogPageLocators.BUTTON)
+    assert browser.find_element(*CatalogPageLocators.TEXT_HP)
+    assert browser.find_element(*CatalogPageLocators.CURRENCY)
+    assert browser.find_element(*CatalogPageLocators.PRODUCT_CATALOG)
 
 
-def test_login_admin_page(browser, open_opencart_homepage):
-    # Ищем элементы на странице логина в админку
-    browser.get(open_opencart_homepage + "/admin/")
-    browser.find_element_by_id("input-username")
-    browser.find_element_by_name("password")
-    browser.find_element_by_css_selector("button[type='submit']")
-    browser.find_element_by_link_text("Forgotten Password")
-    browser.find_element_by_xpath("//*[text()='OpenCart']")
+def test_login_admin_page(browser, admin_login_page):
+     # Ищем элементы на странице логина в админку
+    assert browser.find_element(*AdminPageLocators.INPUT_USER)
+    assert browser.find_element(*AdminPageLocators.INPUT_PASSWORD)
+    assert browser.find_element(*AdminPageLocators.SUBMIT_BUTTON)
+    assert browser.find_element(*AdminPageLocators.FORGOTTEN_PASS)
+    assert browser.find_element(*AdminPageLocators.OPEN_CART)
 
 
-def test_product_cart(browser, open_opencart_homepage):
+def test_product_cart(browser, open_product_cart):
     # Ищем элементы на странице карточки товара
-    browser.get(open_opencart_homepage + "/index.php?route=product/product&path=57&product_id=49")
-    browser.find_element_by_class_name("list-unstyled")
-    browser.find_element_by_id("button-cart")
-    browser.find_element_by_name("quantity")
-    browser.find_element_by_link_text("Samsung Galaxy Tab 10.1")
-    browser.find_element_by_id("logo")
+    assert browser.find_element(*ProductPageLocators.CART_TEXT)
+    assert browser.find_element(*ProductPageLocators.LIST_UNSTYLED)
+    assert browser.find_element(*ProductPageLocators.BUTTON_CART)
+    assert browser.find_element(*ProductPageLocators.QUANTITY)
+    assert browser.find_element(*ProductPageLocators.CART_TEXT)
+    assert browser.find_element(*ProductPageLocators.LOGO)
 
 
-def test_login_page(browser, open_opencart_homepage):
+def test_login_page(browser, open_login_page):
     # Ищем элементы на странице логина
-    browser.get(open_opencart_homepage + "/index.php?route=account/login")
-    browser.find_element_by_id("cart-total")
-    browser.find_element_by_name("email")
-    browser.find_element_by_name("password")
-    browser.find_element_by_css_selector("input[type='submit']")
-    browser.find_element_by_link_text("Continue")
+    assert browser.find_element(*LoginPageLocators.ITEMS)
+    assert browser.find_element(*LoginPageLocators.FIELD_EMAIL)
+    assert browser.find_element(*LoginPageLocators.FIELD_PASSWORD)
+    assert browser.find_element(*LoginPageLocators.SUBMIT_BUTTON)
+    assert browser.find_element(*LoginPageLocators.CONTINUE_BUTTON)

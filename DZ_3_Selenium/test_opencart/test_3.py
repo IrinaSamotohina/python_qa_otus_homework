@@ -1,16 +1,15 @@
-def test_login_admin(browser, open_opencart_homepage):
-    browser.get(open_opencart_homepage + "/admin/")
-    text_fields = browser.find_element_by_class_name("form-control")
-    text_fields.clear()
-    text_fields.send_keys("demo")
-    browser.find_element_by_css_selector("button[type='submit']").click()
-    assert browser.current_url is not 500
+import requests
 
 
-def test_admin_forgotten_password(browser, open_opencart_homepage):
-    browser.get(open_opencart_homepage + "/admin/")
-    browser.find_element_by_link_text("Forgotten Password").click()
-    browser.find_element_by_id("input-email").send_keys("test@test.ru")
-    browser.find_element_by_css_selector("button[type='submit']").click()
-    q = browser.find_element_by_class_name("alert-dismissible")
-    assert q is not None
+def test_login_admin(browser, admin_login_page):
+    admin_login_page.text_field()
+    admin_login_page.find_and_click_submit_button()
+    result = requests.get(browser.current_url)
+    assert result.status_code == 200
+
+
+def test_admin_forgotten_password(admin_login_page):
+    admin_login_page.find_and_click_pass_text()
+    admin_login_page.find_input_email()
+    admin_login_page.find_and_click_submit_button()
+    assert admin_login_page.find_alert() is not None
