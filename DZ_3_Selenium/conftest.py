@@ -20,11 +20,10 @@ def browser(request):
         options.headless = True
         driver = webdriver.Chrome(options=options)
         driver.maximize_window()
-
     elif browser == "firefox":
         options = webdriver.FirefoxOptions()
         options.headless = True
-        driver = webdriver.Firefox(options = options)
+        driver = webdriver.Firefox(options=options)
         driver.maximize_window()
     elif browser == "ie":
         options = webdriver.IeOptions()

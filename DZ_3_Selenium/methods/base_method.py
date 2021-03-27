@@ -7,5 +7,4 @@ class BasePage:
         self.browser = browser
 
     def find_product_card(self):
-        find_card = len(self.browser.find_elements(*BasePageLocators.PRODUCT))
-        return find_card
+        return len(self.browser.find_elements(*BasePageLocators.PRODUCT))
