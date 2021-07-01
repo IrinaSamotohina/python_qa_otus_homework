@@ -43,3 +43,4 @@ with open('user.json', 'r') as user_data:
 with open('result.json', 'w') as data:
     data_all = json.dumps(res, sort_keys=False, indent=2)
     data.write(data_all)
+    
