@@ -7,33 +7,39 @@ with open('books.csv', 'r') as b:
     a = list(reader)
     for row in a:
         books = json.dumps(a, indent=4)
-        with open('../Exercise_1/books.json', 'w') as book:
+        with open('books.json', 'w') as book:
             book.write(books)
 
 
 with open('user.json', 'r') as user_data:
-    with open('../Exercise_1/books.json', 'r') as book_data:
+    with open('books.json', 'r') as book_data:
         users_reader = json.loads(user_data.read())
         books_reader = json.loads(book_data.read())
-        res = []
+        while len(books_reader) != 0:
+            res = []
+            for u in users_reader:
+                if len(books_reader) == 0:
+                    break
+                q = books_reader[0]
+                if u.get('books') is None:
+                    a = {'books': [q]}
+                    u.update(a)
+                else:
+                    d = u.get('books')
+                    d.append(q)
+                books_reader.remove(q)
+
         for u in users_reader:
-            q = books_reader[0]
-            res.append(
-                {
-                    "name": u["name"],
-                    'gender': u["gender"],
-                    'address': u["address"],
-                    'books': [
-                        {
-                            'Title': q["Title"],
-                            'Author': q["Author"],
-                            'Height': q["Height"]
-                        }]
-                }
-            )
-            books_reader.remove(q)
+            res.append({
+                'index': u.get('index'),
+                'name': u.get('name'),
+                'age': u.get('age'),
+                'gender': u.get('gender'),
+                'address': u.get('address'),
+                'books': u.get('books')
+            })
 
 
-with open('books_and_users.json', 'w') as data:
+with open('result.json', 'w') as data:
     data_all = json.dumps(res, sort_keys=False, indent=2)
     data.write(data_all)
